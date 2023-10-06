@@ -20,15 +20,15 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/show")
-    public String showUser(@RequestParam("id") int id, Model model) {
-        model.addAttribute("user", userService.showUserById(id));
-        return "user";
-    }
-
     @GetMapping()
     public String pageUser(Model model, Principal principal) {
         model.addAttribute("user", userService.findByUsername(principal.getName()));
+        return "user";
+    }
+
+    @GetMapping("/show")
+    public String showUser(@RequestParam("id") int id, Model model) {
+        model.addAttribute("user", userService.showUserById(id));
         return "user";
     }
 }

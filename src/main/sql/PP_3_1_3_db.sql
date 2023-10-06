@@ -14,6 +14,8 @@ INSERT INTO user(id, name, age, email, password, username)
 INSERT INTO role(id, role) VALUES (1, 'ROLE_USER');
 INSERT INTO role(id, role) VALUES (2, 'ROLE_ADMIN');
 
-drop table role
-
+insert into user_role(user_id, role_id) VALUES (1,2);
+insert into user_role(user_id, role_id) VALUES (2,1);
+insert into user_role(user_id, role_id) VALUES (3,1);
+insert into user_role(user_id, role_id) VALUES (4,1);
 

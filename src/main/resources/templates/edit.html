@@ -9,20 +9,41 @@
 <br>
 <form th:action="@{/admin/update}" th:object="${user}" th:method="post">
     <input type="hidden" th:value="${user.id}" th:attr=" name='id'"/>
+
     <label for="name">Имя</label>
-    <input type="text" th:field="*{name}" name="name" id="name" />
+    <input type="text" th:field="*{name}" name="name" id="name"/>
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name errors</div>
     <br>
     <label for="age">Возраст</label>
-    <input type="number" th:field="*{age}" name="age" id="age" />
+    <input type="number" th:field="*{age}" name="age" id="age"/>
     <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age errors</div>
     <br>
     <label for="email">Почта</label>
     <input type="text" th:field="*{email}" name="email" id="email"/>
     <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email errors</div>
     <br>
+    <label for="username"> Логин</label>
+    <input type="text" th:field="*{username}" id="username">
+    <br/>
+    <label for="password">Пароль:</label>
+    <input type="text" th:field="*{password}" id="password">
+    <br>
+    <br>
+    <div>
+        <label>Выбрать роль
+            <th:block th:each="role: ${roles}">
+                <input type="checkbox" th:field="*{roles}"
+                       th:text="${role.getRole()}" th:value="${role.getId()}"/>
+            </th:block>
+        </label>
+    </div>
+    <br>
     <input type="submit" value="Сохранить"/>
 </form>
+<br>
+<div>
+    <input type="button" value="Назад" onclick="history.go(-1)">
+</div>
 </body>
 <form th:action="@{/logout}" th:method="POST">
     <input type="submit" value="Выйти">

@@ -12,15 +12,24 @@
         <th>Имя пользователя</th>
         <th>Возраст пользователя</th>
         <th>Почта пользователя</th>
+        <th>Логин пользователя</th>
+        <th>Пароль пользователя</th>
+        <th>Роль пользователя</th>
     </tr>
     <tr th:object="${user}">
         <td th:utext="${user.getId()}">id</td>
         <td th:utext="${user.getName()}">name</td>
         <td th:utext="${user.getAge()}">age</td>
         <td th:utext="${user.getEmail()}">email</td>
+        <td th:utext="${user.getUsername()}">email</td>
+        <td th:utext="${user.getPassword()}">email</td>
+        <td th:utext="${user.getRoles()}">email</td>
     </tr>
 </table>
 <br>
+<div>
+    <input type="button" value="Назад" onclick="history.go(-1)">
+</div>
 </body>
 <form th:action="@{/logout}" th:method="POST">
     <input type="submit" value="Выйти">

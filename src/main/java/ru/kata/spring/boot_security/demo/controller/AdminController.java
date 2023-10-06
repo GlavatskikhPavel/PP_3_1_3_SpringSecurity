@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import javax.validation.Valid;
 
@@ -14,10 +15,12 @@ import javax.validation.Valid;
 public class AdminController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping()
@@ -27,9 +30,9 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    private String getFormNewUser(Model model) {
-        User user = new User();
+    private String getFormNewUser(Model model, User user) {
         model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.getAllRole());
         return "new";
     }
 
@@ -45,6 +48,7 @@ public class AdminController {
     @GetMapping("/edit")
     private String getFormEditUser(@RequestParam("id") int id, Model model) {
         model.addAttribute("user", userService.showUserById(id));
+        model.addAttribute("roles", roleService.getAllRole());
         return "edit";
     }
 
