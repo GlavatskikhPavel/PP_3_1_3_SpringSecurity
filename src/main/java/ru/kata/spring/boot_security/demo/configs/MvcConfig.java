@@ -9,7 +9,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
     // Настройка представлений, которым не нужен контроллер
     public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/user").setViewName("user");
         registry.addViewController("/index").setViewName("index");
     }
 }
