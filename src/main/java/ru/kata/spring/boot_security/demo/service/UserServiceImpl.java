@@ -1,23 +1,29 @@
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -34,6 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -43,11 +50,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(int id, User user) {
+    public void updateUser(int id, User updateUser) {
+        Set<Role> updateRoles = updateUser.getRoles();
+        User user = userRepository.findById(id).get();
+        user.setName(updateUser.getName());
+        user.setAge(updateUser.getAge());
+        user.setEmail(updateUser.getEmail());
+        user.setUsername(updateUser.getUsername());
+        user.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        user.setRoles(updateRoles);
         userRepository.save(user);
     }
 
     // обертка над методом репозитория
+    @Transactional(readOnly = true)
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -55,6 +71,7 @@ public class UserServiceImpl implements UserService {
 
     // Реализация UserDetailsService. UserDetailsService является источником UserDetails по Usera'м.
     // задача сервиса достать user по username
+    @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);

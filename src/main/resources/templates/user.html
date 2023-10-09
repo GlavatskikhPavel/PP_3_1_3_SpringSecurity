@@ -13,7 +13,6 @@
         <th>Возраст пользователя</th>
         <th>Почта пользователя</th>
         <th>Логин пользователя</th>
-        <th>Пароль пользователя</th>
         <th>Роль пользователя</th>
     </tr>
     <tr th:object="${user}">
@@ -21,9 +20,8 @@
         <td th:utext="${user.getName()}">name</td>
         <td th:utext="${user.getAge()}">age</td>
         <td th:utext="${user.getEmail()}">email</td>
-        <td th:utext="${user.getUsername()}">email</td>
-        <td th:utext="${user.getPassword()}">email</td>
-        <td th:utext="${user.getRoles()}">email</td>
+        <td th:utext="${user.getUsername()}">username</td>
+        <td th:utext="${user.getRoles()}">role</td>
     </tr>
 </table>
 <br>
