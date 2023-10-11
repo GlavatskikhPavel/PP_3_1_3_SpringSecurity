@@ -34,9 +34,11 @@ public class User implements UserDetails {
 
     /* Для аутентификации  */
 
+    @NotEmpty(message = "Login should not be empty")
     @Column(name = "username")
     private String username;
 
+    @NotEmpty(message = "Password should not be empty")
     @Column(name = "password")
     private String password;
 

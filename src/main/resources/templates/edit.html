@@ -14,33 +14,39 @@
     <input type="text" th:field="*{name}" name="name" id="name"/>
     <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name errors</div>
     <br>
+    <br>
     <label for="age">Возраст</label>
     <input type="number" th:field="*{age}" name="age" id="age"/>
     <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age errors</div>
+    <br>
     <br>
     <label for="email">Почта</label>
     <input type="text" th:field="*{email}" name="email" id="email"/>
     <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email errors</div>
     <br>
+    <br>
     <label for="username"> Логин</label>
     <input type="text" th:field="*{username}" id="username">
+    <div style="color: red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username errors</div>
     <br/>
+    <br>
     <label for="password">Пароль:</label>
     <input type="text" th:field="*{password}" id="password">
+    <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password errors</div>
     <br>
     <br>
     <div>
-        <label>Выбрать роль
-            <th:block th:each="role: ${roles}">
-                <input type="checkbox" th:field="*{roles}"
-                       th:text="${role.getRole()}" th:value="${role.getId()}"/>
-            </th:block>
+        <label>Role:
+            <select size="2" name="roles" >
+                <option value="1">ADMIN</option>
+                <option selected="selected" value="2">USER</option>
+            </select>
         </label>
     </div>
     <br>
+    <br>
     <input type="submit" value="Сохранить"/>
 </form>
-<br>
 <div>
     <input type="button" value="Назад" onclick="history.go(-1)">
 </div>
